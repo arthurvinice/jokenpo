@@ -10,13 +10,13 @@ This example project implements a simple **Rock, Paper, Scissors (Jankenpon - �
 
 This project focuses on experimenting with:
 
-- 🧩 **Livewire 4 class routing**
+- **Livewire 4 class routing**
   - Components are now mapped through Livewire class in routes.php.
-- 🗂️ **New directory structure**
+- **New directory structure**
   - Instead of separate files in `/app/Http/Livewire` and `/app/resources/views/Livewire`, components are now organized under `/app/resources/views/components`, using the emoji ⚡ to identify Livewire components.
-- ⚡ **Reactivity improvements**
+- **Reactivity improvements**
   - Faster updates and simplified lifecycle handling.
-- 🎨 **Integration with Blade and Bootstrap**
+- **Integration with Blade and Bootstrap**
   - Optimizes Blade templates by "code folding" static content, making components render significantly faster.
 
 ---
