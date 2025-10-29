@@ -98,8 +98,8 @@ new class extends Component
     <div class="container">
         <!-- title -->
         <div class="text-center mb-5 animate__animated animate__fadeInDown">
-            <h1 class="display-1 fw-bold text-white mb-3">🎮 Jo-ken-po</h1>
-            <p class="lead text-white fs-3">Rock, paper or scissors?</p>
+            <h1 class="display-1 fw-bold text-white mb-3">🎮 Rock, paper or scissors?</h1>
+            <!-- <p class="lead text-white fs-3">Rock, paper or scissors?</p> -->
         </div>
 
         <!-- scoreboard -->
