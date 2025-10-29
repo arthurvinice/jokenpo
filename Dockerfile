@@ -20,13 +20,17 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy all application files first (artisan will exist)
+# Configure Apache to use Laravel's public folder as DocumentRoot
+RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
+
+# Copy all application files
 COPY . .
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install PHP dependencies without running scripts (artisan already exists)
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
 # Run Laravel post-install scripts
