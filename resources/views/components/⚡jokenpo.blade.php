@@ -13,14 +13,14 @@ new class extends Component
     public $showResult = false;
 
     public $emojis = [
-        'pedra' => '✊',
-        'papel' => '✋',
-        'tesoura' => '✌️'
+        'rock' => '✊',
+        'paper' => '✋',
+        'scissors' => '✌️'
     ];
 
     public function getComputerChoice()
     {
-        $choices = ['pedra', 'papel', 'tesoura'];
+        $choices = ['rock', 'paper', 'scissors'];
         return $choices[array_rand($choices)];
     }
 
@@ -31,10 +31,9 @@ new class extends Component
         $this->result = $this->getResult();
         $this->showResult = true;
 
-        // Atualizar pontuação
-        if ($this->result == 'Você ganhou!') {
+        if ($this->result == 'You win!') {
             $this->playerScore++;
-        } elseif ($this->result == 'Você perdeu!') {
+        } elseif ($this->result == 'You lose!') {
             $this->computerScore++;
         } else {
             $this->draws++;
@@ -44,15 +43,15 @@ new class extends Component
     public function getResult()
     {
         if ($this->playerChoice == $this->computerChoice) {
-            return 'Empate';
+            return 'Draw';
         } elseif (
-            ($this->playerChoice == 'pedra' && $this->computerChoice == 'tesoura') ||
-            ($this->playerChoice == 'papel' && $this->computerChoice == 'pedra') ||
-            ($this->playerChoice == 'tesoura' && $this->computerChoice == 'papel')
+            ($this->playerChoice == 'rock' && $this->computerChoice == 'scissors') ||
+            ($this->playerChoice == 'paper' && $this->computerChoice == 'rock') ||
+            ($this->playerChoice == 'scissors' && $this->computerChoice == 'paper')
         ) {
-            return 'Você ganhou!';
+            return 'You win!';
         } else {
-            return 'Você perdeu!';
+            return 'You lose!';
         }
     }
 
@@ -97,13 +96,13 @@ new class extends Component
         }
     </style>
     <div class="container">
-        <!-- Título -->
+        <!-- title -->
         <div class="text-center mb-5 animate__animated animate__fadeInDown">
-            <h1 class="display-1 fw-bold text-white mb-3">🎮 Jokenpô</h1>
-            <p class="lead text-white fs-3">Pedra, Papel ou Tesoura?</p>
+            <h1 class="display-1 fw-bold text-white mb-3">🎮 Jo-ken-po</h1>
+            <p class="lead text-white fs-3">Rock, paper or scissors?</p>
         </div>
 
-        <!-- Placar -->
+        <!-- scoreboard -->
         <div class="card shadow-lg border-0 mb-4">
             <div class="card-body p-4">
                 <div class="row g-3 text-center">
@@ -111,7 +110,7 @@ new class extends Component
                         <div class="card bg-success bg-gradient text-white border-0 shadow-sm">
                             <div class="card-body py-4">
                                 <h2 class="display-3 fw-bold mb-2">{{ $playerScore }}</h2>
-                                <h6 class="text-uppercase fw-bold mb-0">Você</h6>
+                                <h6 class="text-uppercase fw-bold mb-0">You</h6>
                             </div>
                         </div>
                     </div>
@@ -119,7 +118,7 @@ new class extends Component
                         <div class="card bg-secondary bg-gradient text-white border-0 shadow-sm">
                             <div class="card-body py-4">
                                 <h2 class="display-3 fw-bold mb-2">{{ $draws }}</h2>
-                                <h6 class="text-uppercase fw-bold mb-0">Empates</h6>
+                                <h6 class="text-uppercase fw-bold mb-0">Ties</h6>
                             </div>
                         </div>
                     </div>
@@ -127,7 +126,7 @@ new class extends Component
                         <div class="card bg-danger bg-gradient text-white border-0 shadow-sm">
                             <div class="card-body py-4">
                                 <h2 class="display-3 fw-bold mb-2">{{ $computerScore }}</h2>
-                                <h6 class="text-uppercase fw-bold mb-0">Computador</h6>
+                                <h6 class="text-uppercase fw-bold mb-0">Computer</h6>
                             </div>
                         </div>
                     </div>
@@ -141,64 +140,64 @@ new class extends Component
                 @if($total > 0)
                 <div class="text-center mt-4">
                     <div class="badge bg-info text-dark fs-5 px-4 py-3">
-                        📊 Taxa de Vitória: <strong>{{ $winRate }}%</strong>
-                        <span class="ms-2">({{ $total }} partidas)</span>
+                        📊 Win rate: <strong>{{ $winRate }}%</strong>
+                        <span class="ms-2">({{ $total }} games)</span>
                     </div>
                 </div>
                 @endif
             </div>
         </div>
 
-        <!-- Área do Jogo -->
+        <!-- game area -->
         <div class="card shadow-lg border-0 mb-4">
             <div class="card-body p-5">
                 @if($showResult)
-                <!-- Resultado da Jogada -->
+                <!-- result -->
                 <div class="text-center animate__animated animate__zoomIn">
                     <div class="row justify-content-center align-items-center mb-5 g-4">
-                        <!-- Jogador -->
+                        <!-- player -->
                         <div class="col-md-4 text-center">
                             <div class="display-1 mb-3 animate__animated animate__bounce animate__infinite">
                                 {{ $emojis[$playerChoice] }}
                             </div>
                             <h4 class="text-uppercase fw-bold text-primary">{{ $playerChoice }}</h4>
-                            <p class="text-muted mb-0">Você</p>
+                            <p class="text-muted mb-0">You</p>
                         </div>
 
-                        <!-- VS -->
+                        <!-- versus -->
                         <div class="col-md-2 text-center">
                             <h2 class="display-4 fw-bold text-muted">VS</h2>
                         </div>
 
-                        <!-- Computador -->
+                        <!-- cpu -->
                         <div class="col-md-4 text-center">
                             <div class="display-1 mb-3 animate__animated animate__bounce animate__infinite" style="animation-delay: 0.1s;">
                                 {{ $emojis[$computerChoice] }}
                             </div>
                             <h4 class="text-uppercase fw-bold text-danger">{{ $computerChoice }}</h4>
-                            <p class="text-muted mb-0">Computador</p>
+                            <p class="text-muted mb-0">Computer</p>
                         </div>
                     </div>
 
-                    <!-- Mensagem do Resultado -->
+                    <!-- result message -->
                     <div class="mb-4">
-                        @if($result == 'Você ganhou!')
+                        @if($result == 'You win!')
                         <div class="alert alert-success border-0 shadow-sm py-4" role="alert">
                             <div class="display-4 mb-3">🎉</div>
-                            <h2 class="alert-heading fw-bold">VOCÊ GANHOU!</h2>
-                            <p class="mb-0 fs-5">{{ ucfirst($playerChoice) }} vence {{ $computerChoice }}!</p>
+                            <h2 class="alert-heading fw-bold">YOU WIN!</h2>
+                            <p class="mb-0 fs-5">{{ ucfirst($playerChoice) }} beats {{ $computerChoice }}!</p>
                         </div>
-                        @elseif($result == 'Você perdeu!')
+                        @elseif($result == 'You lose!')
                         <div class="alert alert-danger border-0 shadow-sm py-4" role="alert">
                             <div class="display-4 mb-3">😢</div>
-                            <h2 class="alert-heading fw-bold">VOCÊ PERDEU!</h2>
-                            <p class="mb-0 fs-5">{{ ucfirst($computerChoice) }} vence {{ $playerChoice }}!</p>
+                            <h2 class="alert-heading fw-bold">YOU LOSE!</h2>
+                            <p class="mb-0 fs-5">{{ ucfirst($computerChoice) }} beats {{ $playerChoice }}!</p>
                         </div>
                         @else
                         <div class="alert alert-secondary border-0 shadow-sm py-4" role="alert">
                             <div class="display-4 mb-3">🤝</div>
-                            <h2 class="alert-heading fw-bold">EMPATE!</h2>
-                            <p class="mb-0 fs-5">Ambos escolheram {{ $playerChoice }}!</p>
+                            <h2 class="alert-heading fw-bold">IT'S A DRAW!</h2>
+                            <p class="mb-0 fs-5">Both choose {{ $playerChoice }}!</p>
                         </div>
                         @endif
                     </div>
@@ -206,16 +205,16 @@ new class extends Component
                     <button
                         wire:click="newRound"
                         class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow">
-                        🔄 Jogar Novamente
+                        🔄 Play Again
                     </button>
                 </div>
                 @else
-                <!-- Escolha sua Jogada -->
+                <!-- choose play -->
                 <div class="text-center">
-                    <h2 class="display-6 fw-bold text-dark mb-5">Faça sua escolha:</h2>
+                    <h2 class="display-6 fw-bold text-dark mb-5">Make your choice:</h2>
 
                     <div class="row g-4">
-                        @foreach(['pedra', 'papel', 'tesoura'] as $choice)
+                        @foreach(['rock', 'paper', 'scissors'] as $choice)
                         <div class="col-md-4">
                             <button
                                 wire:click="play('{{ $choice }}')"
@@ -231,14 +230,14 @@ new class extends Component
             </div>
         </div>
 
-        <!-- Botão Reset -->
+        <!-- rest btn -->
         @if($total > 0)
         <div class="text-center">
             <button
                 wire:click="resetGame"
-                wire:confirm="Tem certeza que deseja resetar o placar?"
+                wire:confirm="Are you sure you want to reset the game?"
                 class="btn btn-danger btn-lg px-5 py-3 fw-bold shadow">
-                🔄 Resetar Placar
+                🔄 Reset Scores
             </button>
         </div>
         @endif
