@@ -1,10 +1,14 @@
+# -------------------------------
+# Laravel + Livewire 4 Dockerfile
+# -------------------------------
+
 # Use the official PHP 8.2 image with Apache
 FROM php:8.2-apache
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install dependencies
+# Install PHP extensions and system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -16,28 +20,28 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy composer files first (to leverage cache)
-COPY composer.json composer.lock ./
-
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Copy the rest of the application
+# Copy all application files first (artisan will exist)
 COPY . .
 
-# Set permissions
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install PHP dependencies without running scripts (artisan already exists)
+RUN composer install --no-dev --optimize-autoloader
+
+# Run Laravel post-install scripts
+RUN php artisan package:discover --ansi
+
+# Set permissions for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 80
 EXPOSE 80
 
-# Environment variables (Render can override)
+# Environment variables (can override in Render)
 ENV APP_ENV=production
 ENV APP_DEBUG=false
 ENV APP_KEY=base64:QyuVEgQtiuP8jU7/7hmT2ovX/VXuH8MNWgEFIcA3SJE=
 
-# Run Apache in foreground
+# Run Apache in the foreground
 CMD ["apache2-foreground"]
