@@ -16,13 +16,17 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy application files
-COPY . .
-
-# Copy composer and install dependencies
+# Copy composer files first (to leverage cache)
 COPY composer.json composer.lock ./
+
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
+
+# Copy the rest of the application
+COPY . .
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -30,7 +34,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port 80
 EXPOSE 80
 
-# Set environment variable (optional, Render will override)
+# Environment variables (Render can override)
 ENV APP_ENV=production
 ENV APP_DEBUG=false
 ENV APP_KEY=base64:QyuVEgQtiuP8jU7/7hmT2ovX/VXuH8MNWgEFIcA3SJE=
