@@ -1,6 +1,6 @@
 # 🪨📄✂️ Rock, Paper, Scissors — Livewire 4 Demo Project
 
-This repository is a **demo and playground** built to explore and test the **new features introduced in [Livewire 4]([https://livewire.laravel.com/docs](https://livewire.laravel.com/docs/4.x/quickstart))**.
+This repository is a demo and playground built to explore and test the new features introduced in [Livewire 4]([https://livewire.laravel.com/docs](https://livewire.laravel.com/docs/4.x/quickstart)).
 
 This example project implements a simple **Rock, Paper, Scissors (Jankenpon - じゃんけんぽん)** game using Laravel + Livewire 4.
 
